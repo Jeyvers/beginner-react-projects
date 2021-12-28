@@ -159,6 +159,12 @@ input {
   border-top-left-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
 }
+
+input:focus {
+  border: none;
+  outline: none;
+}
+
 .btn {
   background: var(--clr-primary-5);
   padding: 0.5rem 1rem;
