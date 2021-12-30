@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import List from './List';
 import Alert from './Alert';
 
+const getLocalData = () => {
+  let list = localStorage.getItem('list');
+  if (list) {
+    return JSON.parse(localStorage.getItem('list'));
+  } else {
+    return [];
+  }
+};
 function App() {
   const [name, setName] = useState('');
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(getLocalData);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setIsEditId] = useState(null);
   const [alert, setAlert] = useState({
@@ -27,6 +35,18 @@ function App() {
       showAlert(true, 'Please fill in all fields', 'danger');
     } else if (name && isEditing) {
       // Deal with edit
+      setList(
+        list.map((item) => {
+          if (item.id === editId) {
+            return { ...item, title: name };
+          }
+          return item;
+        })
+      );
+      setName('');
+      setIsEditId(null);
+      setIsEditing(false);
+      showAlert(true, 'Value changed', 'success');
     } else {
       // Show alert and add item to list
       const newItem = { id: new Date().getTime().toString(), title: name };
@@ -38,23 +58,34 @@ function App() {
 
   const clearFunction = () => {
     setList([]);
-    showAlert(true, 'Items deleted successfully', 'success');
+    showAlert(true, 'Items deleted successfully', 'danger');
   };
 
   const deleteItem = (id) => {
     const newList = list.filter((item) => item.id !== id);
     setList(newList);
-    showAlert(true, 'Item deleted successfully', 'success');
+    showAlert(true, 'Item deleted successfully', 'danger');
   };
 
   const showAlert = (show = false, msg = '', type = '') => {
     setAlert({ show, msg, type });
   };
 
+  const editItem = (id) => {
+    const specificItem = list.find((item) => item.id === id);
+    setIsEditing(true);
+    setIsEditId(id);
+    setName(specificItem.title);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('list', JSON.stringify(list));
+  }, [list]);
+
   return (
     <section className='section-center'>
       <form className='grocery-form' onSubmit={handleSubmit}>
-        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
         <h3>Grocery bud</h3>
         <div className='form-control'>
           <input
@@ -71,10 +102,9 @@ function App() {
       </form>
       {list.length > 0 && (
         <div className='grocery-container'>
-          <List items={list} deleteItem={deleteItem} />
+          <List items={list} deleteItem={deleteItem} editItem={editItem} />
           <button className='clear-btn' onClick={clearFunction}>
-            {' '}
-            Clear items
+            {' Clear items '}
           </button>
         </div>
       )}
