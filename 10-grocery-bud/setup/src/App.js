@@ -9,8 +9,8 @@ function App() {
   const [editId, setIsEditId] = useState(null);
   const [alert, setAlert] = useState({
     show: false,
-    msg: 'Hi',
-    type: 'success',
+    msg: '',
+    type: '',
   });
 
   useEffect(() => {
