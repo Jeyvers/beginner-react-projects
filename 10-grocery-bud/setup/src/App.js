@@ -24,49 +24,37 @@ function App() {
     e.preventDefault();
     if (!name) {
       // Display alert
-      setAlert({
-        show: true,
-        msg: 'Please fill in all fields',
-        type: 'danger',
-      });
+      showAlert(true, 'Please fill in all fields', 'danger');
     } else if (name && isEditing) {
       // Deal with edit
     } else {
       // Show alert and add item to list
       const newItem = { id: new Date().getTime().toString(), title: name };
       setList([...list, newItem]);
-      setAlert({
-        show: true,
-        msg: 'Item added successfully',
-        type: 'success',
-      });
+      showAlert(true, 'Item added successfully', 'success');
       setName('');
     }
   };
 
   const clearFunction = () => {
     setList([]);
-    setAlert({
-      show: true,
-      msg: 'Items deleted successfully',
-      type: 'success',
-    });
+    showAlert(true, 'Items deleted successfully', 'success');
   };
 
   const deleteItem = (id) => {
     const newList = list.filter((item) => item.id !== id);
     setList(newList);
-    setAlert({
-      show: true,
-      msg: 'Item deleted successfully',
-      type: 'success',
-    });
+    showAlert(true, 'Item deleted successfully', 'success');
+  };
+
+  const showAlert = (show = false, msg = '', type = '') => {
+    setAlert({ show, msg, type });
   };
 
   return (
     <section className='section-center'>
       <form className='grocery-form' onSubmit={handleSubmit}>
-        {alert.show && <Alert {...alert} />}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
         <h3>Grocery bud</h3>
         <div className='form-control'>
           <input
