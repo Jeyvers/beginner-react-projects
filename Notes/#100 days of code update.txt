@@ -1,0 +1,10 @@
+I got so busy two days ago and forgot to tweet my update on the #100DaysOfCode as I said I would. 
+I've learnt a lot so far, on my React journey. On the top of list is the fact that React makes JavaScript easier and more interesting to work with. I have issues comprehending its error setup, however, I believe I would understand as I practice.
+Summary of concepts learnt so far:
+- Basics (rendering, jsx and its rules, nested components, react tools, react events, props, deploying, etc)
+- Advanced (Hooks: useState, useEffect, conditional rendering, working with forms, useRef, useReducer, prop drilling, context API /useContext. 
+- Current level (React Router)
+
+I encoutered difficulties understanding useReducer. Attached is an image of one of the projects built during the course (I might upload some others). 
+Resources used: https://www.youtube.com/watch?v=4UZrsTqkcW4,
+https://www.youtube.com/watch?v=a_7Z7C_JCyo
