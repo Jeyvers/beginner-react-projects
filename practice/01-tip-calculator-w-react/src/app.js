@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaDollarSign, FaUser } from 'react-icons/fa';
 
 const App = () => {
@@ -8,6 +8,7 @@ const App = () => {
   const [bill, setBill] = useState(0);
   const [noOfPeople, setNoOfPeople] = useState(0);
   const [tipPercentage, setTipPercentage] = useState(0.05);
+  let [isActiveError, setIsActiveError] = useState(false);
 
   const calculate = () => {
     if (bill && noOfPeople && tipPercentage) {
@@ -37,8 +38,6 @@ const App = () => {
   useEffect(() => {
     calculate();
   }, [bill, noOfPeople, tipPercentage]);
-
-  const peopleInput = React.createRef();
 
   return (
     <div>
@@ -92,8 +91,12 @@ const App = () => {
               />
             </div>
             <div className='column'>
-              <h3>Number of People</h3>
-
+              <header>
+                <h3>Number of People</h3>
+                <h3 className={`${isActiveError ? 'error' : 'active-error'}`}>
+                  Can't be zero
+                </h3>
+              </header>
               <input
                 type='text'
                 placeholder='0'
@@ -101,12 +104,13 @@ const App = () => {
                 onChange={(e) => {
                   if (e.target.value < 1) {
                     e.target.style.outline = 'red 2px solid';
+                    setIsActiveError(true);
                   } else if (e.target.value > 1) {
                     e.target.style.outline = 'blue 2px solid';
+                    setIsActiveError(false);
                   }
                   setNoOfPeople(e.target.value);
                 }}
-                ref={peopleInput}
               />
 
               <i>

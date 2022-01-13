@@ -78,9 +78,23 @@ button {
 }
 
 .container h3 {
-  font-size: var(--normal-font-size);
+  font-size: var(--small-font-size);
   font-weight: lighter;
   padding-bottom: 0.5rem;
+}
+
+.column header {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 265px;
+}
+
+.column header .active-error {
+  display: none;
+}
+
+.column header .error {
+  color: red;
 }
 
 .card {
@@ -99,7 +113,7 @@ button {
 .column i {
   position: absolute;
   left: 10px;
-  top: 42px;
+  top: 35px;
   font-size: var(--small-font-size);
   opacity: 0.2;
 }
